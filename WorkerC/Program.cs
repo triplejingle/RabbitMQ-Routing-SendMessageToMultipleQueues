@@ -11,16 +11,15 @@ using var channel = connection.CreateModel();
 channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
 string ExchangeName = "postExchange";
 channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
-string queuename = "queueC"; 
+string queuename = "queueA"; 
 channel.QueueDeclare(queue: queuename,
     durable: false,
     exclusive: false,
     autoDelete: false,
     arguments: null);
-
 channel.QueueBind(queue: queuename,
     exchange: ExchangeName,
-    routingKey: "updatepost");
+    routingKey: "createpost");
 var consumer = new EventingBasicConsumer(channel);
 
 consumer.Received += (IModel, ea) =>
